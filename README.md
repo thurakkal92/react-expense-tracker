@@ -17,3 +17,13 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
+
+
+## TO DO
+
+1. Start with basic level application with Local storage.
+2. Update to get Month level expense.
+3. Update to any online DB to get familiarize with ASYNC fn call.
+4. Update to PWA level application.
+
+
