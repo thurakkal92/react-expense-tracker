@@ -1,4 +1,4 @@
-#React Expense Tracker
+# React Expense Tracker
 
 In this project we are using Strombreaker component library
 
