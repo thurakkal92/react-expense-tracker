@@ -1,11 +1,20 @@
 import React from 'react';
-import { ThemeProvider, Global, theme, globalStyles } from 'stormbreaker';
+import { ThemeProvider, Global, globalStyles } from 'stormbreaker';
+import { AppRouter } from './AppRouter';
+import { CustomTheme } from './theme';
+import UserContextProvider from './Contexts/UserContext';
+import AuthContextProvider from './Contexts/AuthContext';
+import TransactionContextProvider from './Contexts/TransactionContext'
 
 function App() {
 	return (
-		<ThemeProvider theme={theme}>
+		<ThemeProvider theme={CustomTheme}>
 			<Global styles={globalStyles} />
-			<div>This is expense tracker</div>
+			<AuthContextProvider>
+				<UserContextProvider>
+					<TransactionContextProvider>{AppRouter}</TransactionContextProvider>
+				</UserContextProvider>
+			</AuthContextProvider>
 		</ThemeProvider>
 	);
 }
