@@ -1,42 +1,37 @@
 import React, { createContext, useState, useEffect } from 'react';
-export const TransactionContext = createContext();
+export const TransactionContext = createContext([{}, () => {}]);
 
 function TransactionContextProvider({ children }) {
-	const DUMMY = [
-		{
-			category: 'Food',
-			categoryId: '1',
-			transactions: [
-				{ title: 'Biryani', id: '1', amount: 1200 },
-				{ title: 'Pizza', id: '2', amount: 200 },
-			],
-			totalAmount: 1400,
-		},
-		{
-			category: 'Medicine',
-			categoryId: '2',
-			transactions: [
-				{ title: 'Insuline', id: '1', amount: 200 },
-				{ title: 'Capsules', id: '2', amount: 200 },
-			],
-			totalAmount: 400,
-		},
-	];
+	// const DUMMY = [
+	// 	{
+	// 		name: 'Food',
+	// 		id: 1,
+	// 		transactions: [
+	// 			{ name: 'Biryani', id: 1, amount: 1200 },
+	// 			{ name: 'Pizza', id: 2, amount: 200 },
+	// 		],
+	// 	},
+	// 	{
+	// 		name: 'Medicine',
+	// 		id: 2,
+	// 		transactions: [
+	// 			{ name: 'Insuline', id: 1, amount: 200 },
+	// 			{ name: 'Capsules', id: 2, amount: 200 },
+	// 		], 
+	// 	},
+	// ];
+	
 	const transactionsFromLocal = () => {
-		const savedTransactions = localStorage.getItem('transactions')
-		return savedTransactions ? JSON.parse(savedTransactions) : DUMMY
-	}
-	const [transactionList, setTransactionList] = useState(transactionsFromLocal);
+		const savedTransactions = localStorage.getItem('transactions');
+		return savedTransactions ? JSON.parse(savedTransactions) : [];
+	};
+	const transactionHook = useState(transactionsFromLocal);
 
 	useEffect(() => {
-		localStorage.setItem('transactions', JSON.stringify(transactionList));
-	}, [transactionList]);
+		localStorage.setItem('transactions', JSON.stringify(transactionHook[0]));
+	}, [transactionHook[0]]);
 
-	return (
-		<TransactionContext.Provider value={{ transactionList, setTransactionList: setTransactionList }}>
-			{children}
-		</TransactionContext.Provider>
-	);
+	return <TransactionContext.Provider value={transactionHook}>{children}</TransactionContext.Provider>;
 }
 
 export default TransactionContextProvider;
